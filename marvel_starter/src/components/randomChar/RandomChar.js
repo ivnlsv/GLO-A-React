@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
-import MarvelService from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import './randomChar.scss';
@@ -7,10 +8,7 @@ import mjolnir from '../../resources/img/mjolnir.png';
 
 const RandomChar = () => {
 	const [char, setChar] = useState(null);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(false);
-	
-	const marvelService = new MarvelService();
+	const {loading, error, getCharacter, clearError} = useMarvelService();
 
 	useEffect(() => {
 		updateChar();
@@ -23,27 +21,19 @@ const RandomChar = () => {
 
 	const onCharLoaded = (char) => {
 		setChar(char);
-		setLoading(false);
-	};
-	const onCharLoading = () => {
-		setLoading(true);
-	};
 
-	const onError = () => {
-		setError(true);
-		setLoading(false);
 	};
-	
 
 	const updateChar = () => {
+		clearError();
 		const id = Math.floor(Math.random() * (20 - 1) + 1);
-		onCharLoading();
-		marvelService.getCharacter(id).then(onCharLoaded).catch(onError);
+		getCharacter(id)
+			.then(onCharLoaded);
 	};
 
 	const errorMessage = error ? <ErrorMessage /> : null;
 	const spinner = loading ? <Spinner /> : null;
-	const content = !(loading || error) ? <View char={char} /> : null;
+	const content = !(loading || error || !char) ? <View char={char} /> : null;
 
 	return (
 		<div className="randomchar">
@@ -73,9 +63,13 @@ const View = ({char}) => {
 			? description.slice(0, 206) + '...'
 			: description
 		: 'No description of characters';
+		let imgStyle = {'objectFit' : 'cover'};
+		if (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
+			imgStyle = {'objectFit' : 'contain'};
+		}
 	return (
 		<div className="randomchar__block">
-			<img src={thumbnail} alt="Random character" className="randomchar__img" />
+			<img src={thumbnail} alt="Random character" className="randomchar__img" style={imgStyle}/>
 			<div className="randomchar__info">
 				<p className="randomchar__name">{name}</p>
 				<p className="randomchar__descr">{formattedDescription}</p>
