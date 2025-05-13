@@ -21,7 +21,6 @@ const SinglePage = ({Component, dataType}) => {
 
         const updateData = () => {
             clearError();
-
             switch (dataType) {
                 case 'comic':
                     getComic(id).then(onDataLoaded);
@@ -30,15 +29,12 @@ const SinglePage = ({Component, dataType}) => {
                     getCharacter(id).then(onDataLoaded);
             }
         }
-
         const onDataLoaded = (data) => {
             setData(data);
         }
-
         const errorMessage = error ? <ErrorMessage/> : null;
         const spinner = loading ? <Spinner/> : null;
         const content = !(loading || error || !data) ? <Component data={data}/> : null;
-
         return (
             <>
                 <AppBanner/>
