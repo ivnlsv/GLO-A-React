@@ -1,7 +1,7 @@
 import {useHttp} from '../hooks/http.hook';
 
 const useMarvelService = () => {
-	const {loading, request, error, clearError} = useHttp();
+	const {request, clearError, process, setProcess} = useHttp();
 	const _apiBase = 'https://marvel-server-zeta.vercel.app/';
 	const _apiKey = 'apikey=d4eecb0c66dedbfae4eab45d312fc1df';
 	const _baseOffset = 0;
@@ -30,7 +30,14 @@ const useMarvelService = () => {
 	};
 	const getComic = async (id) => {
 		const res = await request(`${_apiBase}comics/${id}?${_apiKey}`);
-		return _transformComics(res.data.results[0]);
+		//return _transformComics(res.data.results[0]);
+		if (res && res.data && res.data.results && res.data.results.length > 0) {
+        return _transformComics(res.data.results[0]);
+    } else {
+        // Обработка случая, когда комикс не найден
+        console.warn(`Comic with id ${id} not found`);
+        return null; // Или выбросить ошибку, или вернуть какое-то значение по умолчанию
+    }
 	};
 	const _transformCharacter = (char) => {
 		return {
@@ -56,6 +63,15 @@ const useMarvelService = () => {
 				: "not available",
 		};
 	};
-	return {loading, error, clearError, getAllCharacters, getCharacterByName, getCharacter, getAllComics, getComic};
+	return {
+		clearError,
+		process,
+		setProcess,
+		getAllCharacters,
+		getCharacterByName,
+		getCharacter,
+		getAllComics,
+		getComic
+	};
 };
 export default useMarvelService;
