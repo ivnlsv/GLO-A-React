@@ -11,6 +11,18 @@
       "name": "Grud",
       "description": "Рост",
       "element": "earth"
+    },
+    {
+      "id": "3dc5c409-b856-422b-8051-a45927cbe938",
+      "name": "wewe",
+      "description": "wewe",
+      "element": "wind"
+    },
+    {
+      "id": "ad524cf3-8d05-4ed9-8e60-b2e7da1102e4",
+      "name": "йцйц",
+      "description": "йцйцк",
+      "element": "fire"
     }
   ],
   "filters": [

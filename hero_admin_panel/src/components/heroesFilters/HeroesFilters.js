@@ -2,20 +2,17 @@ import {useHttp} from '../../hooks/http.hook';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
-import { fetchFilters } from '../../actions';
-import { filtersChanged } from '../heroesFilters/filtersSlice'
+import { filtersChanged, fetchFilters, selectAll } from '../heroesFilters/filtersSlice'
+import store from '../../store';
 import Spinner from '../spinner/Spinner';
 
 const HeroesFilters = () => {
 
-    const {filters, filtersLoadingStatus, activeFilter} = useSelector(state => state.filters);
-    //const filters = useSelector(state => state.filters.filters);
-    //const filtersLoadingStatus = useSelector(state => state.filters.filtersLoadingStatus);
-    //const activeFilter = useSelector(state => state.filters.activeFilter);
+    const { filtersLoadingStatus, activeFilter } = useSelector(state => state.filters);
+    const filters = selectAll(store.getState());
     const dispatch = useDispatch();
     const {request} = useHttp();
 
-    // Запрос на сервер для получения фильтров и последовательной смены состояния
     useEffect(() => {
         dispatch(fetchFilters(request))
         
