@@ -7,22 +7,10 @@
       "element": "water"
     },
     {
-      "id": "16e76d1e-f664-4fca-ad4f-446a2fef8fde",
-      "name": "Grud",
-      "description": "Рост",
-      "element": "earth"
-    },
-    {
-      "id": "3dc5c409-b856-422b-8051-a45927cbe938",
-      "name": "wewe",
-      "description": "wewe",
+      "id": "c5e3476a-a823-4b4b-8e59-a7b21f03646c",
+      "name": "Hero 2",
+      "description": "All",
       "element": "wind"
-    },
-    {
-      "id": "ad524cf3-8d05-4ed9-8e60-b2e7da1102e4",
-      "name": "йцйц",
-      "description": "йцйцк",
-      "element": "fire"
     }
   ],
   "filters": [
